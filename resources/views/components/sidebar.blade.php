@@ -1,4 +1,5 @@
-<aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'" class="w-64 bg-[var(--primary-color)] text-white flex flex-col h-full shadow-lg shrink-0 fixed inset-y-0 left-0 z-[50] md:relative transition-transform duration-300 ease-in-out">
+<aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'"
+    class="w-64 bg-[var(--primary-color)] text-white flex flex-col h-full shadow-lg shrink-0 fixed inset-y-0 left-0 z-[50] md:relative transition-transform duration-300 ease-in-out">
     <!-- Logo & Branding Oficial -->
     <div class="py-5 flex items-center justify-center border-b border-white/20 shrink-0 mb-2">
         <a href="{{ route('dashboard') }}" class="flex flex-col items-center gap-2">
@@ -110,7 +111,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
                     </svg>
-                    <span class="font-medium text-sm">Contas (Acessos)</span>
+                    <span class="font-medium text-sm">Usuários</span>
                 </a>
                 <a href="{{ route('funcionarios.index') }}"
                     class="{{ request()->routeIs('funcionarios.*') ? 'bg-white/20 text-white border-l-4 border-white' : 'text-white/70 hover:bg-white/10 hover:text-white border-l-4 border-transparent' }} flex items-center gap-3 px-3 py-2 transition-colors group rounded-r-md">

@@ -93,7 +93,7 @@ class Index extends Component
         $this->modalEstado = false;
 
         $this->dispatch('alerta', [
-            'title' => 'Oficial Salvo',
+            'title' => 'Registro Salvo',
             'text' => 'Registro do Efetivo modificado com sucesso.',
             'icon' => 'success'
         ]);
@@ -104,8 +104,8 @@ class Index extends Component
         Funcionario::findOrFail($id)->delete();
 
         $this->dispatch('alerta', [
-            'title' => 'Banhido do Efetivo',
-            'text' => 'O registro primário militar foi extinto.',
+            'title' => 'Apagar Registro',
+            'text' => 'O registro foi apagado.',
             'icon' => 'success'
         ]);
     }
