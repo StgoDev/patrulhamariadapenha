@@ -3,25 +3,48 @@
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
     <!-- Cabeçalho e Toggles de Tempo -->
-    <div class="flex flex-col md:flex-row justify-between items-center bg-white p-6 rounded-lg shadow-sm gap-4">
+    <div class="flex flex-col xl:flex-row justify-between items-center bg-white p-6 rounded-lg shadow-sm gap-4">
         <div>
             <h2 class="text-2xl font-bold text-[var(--primary-color)]">Painel de Comando</h2>
-            <p class="text-sm text-gray-500">Acompanhamento consolidado de Produtividade Tática</p>
+            <div class="flex items-center gap-2 mt-1">
+                <p class="text-sm font-semibold text-gray-500">Visualizando Produtividade em:</p>
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-[var(--primary-color)] capitalize">
+                    {{ $labelTempo }}
+                </span>
+            </div>
         </div>
 
-        <div class="flex bg-gray-100 p-1 rounded-lg">
-            <button wire:click="$set('periodo', 'diario')" 
-                class="px-4 py-2 text-sm font-semibold rounded-md transition-colors {{ $periodo === 'diario' ? 'bg-white shadow text-[var(--primary-color)]' : 'text-gray-600 hover:bg-gray-200' }}">
-                Diário (Hoje)
-            </button>
-            <button wire:click="$set('periodo', 'mensal')" 
-                class="px-4 py-2 text-sm font-semibold rounded-md transition-colors {{ $periodo === 'mensal' ? 'bg-white shadow text-[var(--primary-color)]' : 'text-gray-600 hover:bg-gray-200' }}">
-                Mensal
-            </button>
-            <button wire:click="$set('periodo', 'anual')" 
-                class="px-4 py-2 text-sm font-semibold rounded-md transition-colors {{ $periodo === 'anual' ? 'bg-white shadow text-[var(--primary-color)]' : 'text-gray-600 hover:bg-gray-200' }}">
-                Anual
-            </button>
+        <div class="flex flex-col md:flex-row items-center gap-4">
+            <!-- Navegador do Tempo (Máquina do tempo) -->
+            <div class="flex items-center bg-gray-50 rounded-lg p-1 border border-gray-200 shadow-sm">
+                <button wire:click="voltarTempo" title="Retroceder no Tempo" class="p-2 text-gray-500 hover:text-[var(--primary-color)] hover:bg-white rounded transition-all">
+                    <svg class="w-5 h-5 font-bold" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" /></svg>
+                </button>
+                
+                <button wire:click="irParaHoje" class="px-3 text-xs font-bold text-gray-500 hover:text-[var(--primary-color)] uppercase tracking-wider transition-colors" title="Retornar para Posição Atual">
+                    Hoje
+                </button>
+                
+                <button wire:click="avancarTempo" title="Avançar no Tempo" class="p-2 {{ \Carbon\Carbon::parse($dataReferencia)->isToday() ? 'text-gray-300 cursor-not-allowed' : 'text-gray-500 hover:text-[var(--primary-color)] hover:bg-white' }} rounded transition-all" {{ \Carbon\Carbon::parse($dataReferencia)->isToday() ? 'disabled' : '' }}>
+                    <svg class="w-5 h-5 font-bold" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
+                </button>
+            </div>
+
+            <!-- Toggles de Agrupamento -->
+            <div class="flex bg-gray-100 p-1 rounded-lg shadow-sm border border-gray-200">
+                <button wire:click="$set('periodo', 'diario')" 
+                    class="px-4 py-2 text-sm font-semibold rounded-md transition-colors {{ $periodo === 'diario' ? 'bg-white shadow text-[var(--primary-color)]' : 'text-gray-600 hover:bg-gray-200' }}">
+                    Diário 
+                </button>
+                <button wire:click="$set('periodo', 'mensal')" 
+                    class="px-4 py-2 text-sm font-semibold rounded-md transition-colors {{ $periodo === 'mensal' ? 'bg-white shadow text-[var(--primary-color)]' : 'text-gray-600 hover:bg-gray-200' }}">
+                    Mensal
+                </button>
+                <button wire:click="$set('periodo', 'anual')" 
+                    class="px-4 py-2 text-sm font-semibold rounded-md transition-colors {{ $periodo === 'anual' ? 'bg-white shadow text-[var(--primary-color)]' : 'text-gray-600 hover:bg-gray-200' }}">
+                    Anual
+                </button>
+            </div>
         </div>
     </div>
 
@@ -95,7 +118,7 @@
         <div 
             x-data="chartManager()" 
             x-init="renderChart({{ $chartData }})" 
-            @content-changed.window="updateChart($event.detail[0])"
+            @periodo-changed.window="updateChart($event.detail.data)"
             id="estatisticas-chart" 
             class="w-full"
             style="min-height: 400px;"
@@ -173,18 +196,12 @@
             updateChart(chartData) {
                 if(this.chart) {
                     this.chart.updateOptions({
-                        xaxis: { categories: chartData.labels }
+                        xaxis: { categories: chartData.labels },
+                        series: chartData.series
                     });
-                    this.chart.updateSeries(chartData.series);
                 }
             }
         }));
-
-        // Integrating Livewire hook to send updated chartData downward
-        $wire.on('periodo-changed', (data) => {
-            let event = new CustomEvent('content-changed', { detail: [data] });
-            window.dispatchEvent(event);
-        });
     </script>
     @endscript
 </div>
