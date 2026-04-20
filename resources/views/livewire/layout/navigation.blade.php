@@ -15,14 +15,14 @@ new class extends Component {
     }
 }; ?>
 
-<nav class="bg-white border-b border-gray-100 shadow-sm relative z-40">
+<nav class="bg-[var(--primary-color)] border-b border-white/10 shadow-sm relative z-40 text-white">
     <div class="px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             
             <!-- Left Side: Hamburger (Mobile) -->
             <div class="flex items-center gap-4">
                 <!-- Hamburger Button to Open Sidebar -->
-                <button @click.prevent="sidebarOpen = !sidebarOpen" class="md:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-500 hover:text-[var(--primary-color)] hover:bg-gray-100 focus:outline-none transition ease-in-out duration-150">
+                <button @click.prevent="sidebarOpen = !sidebarOpen" class="md:hidden inline-flex items-center justify-center p-2 rounded-md text-white/70 hover:text-white hover:bg-white/10 focus:outline-none transition ease-in-out duration-150">
                     <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                         <path :class="{'hidden': sidebarOpen, 'inline-flex': !sidebarOpen }" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                         <path :class="{'hidden': !sidebarOpen, 'inline-flex': sidebarOpen }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -34,7 +34,7 @@ new class extends Component {
             <div class="flex items-center">
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
-                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-bold rounded-md text-[var(--primary-color)] bg-gray-50 hover:bg-gray-100 focus:outline-none transition ease-in-out duration-150 shadow-sm">
+                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-bold rounded-md text-[var(--primary-color)] bg-white/95 hover:bg-white focus:outline-none transition ease-in-out duration-150 shadow-sm">
                             <div x-data="{{ json_encode(['name' => auth()->user()->name]) }}" x-text="name.split(' ')[0]" x-on:profile-updated.window="name = $event.detail.name"></div>
                             <div class="ms-1">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
