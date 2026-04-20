@@ -1,4 +1,4 @@
-<aside class="w-64 bg-[var(--primary-color)] text-white flex flex-col h-full shadow-lg shrink-0 hidden md:flex">
+<aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'" class="w-64 bg-[var(--primary-color)] text-white flex flex-col h-full shadow-lg shrink-0 fixed inset-y-0 left-0 z-[50] md:relative transition-transform duration-300 ease-in-out">
     <!-- Logo & Branding Oficial -->
     <div class="py-5 flex items-center justify-center border-b border-white/20 shrink-0 mb-2">
         <a href="{{ route('dashboard') }}" class="flex flex-col items-center gap-2">

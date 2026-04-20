@@ -17,8 +17,11 @@
         <!-- Styles -->
         @livewireStyles
     </head>
-    <body class="font-sans antialiased text-[var(--text-main)] overflow-hidden">
+    <body class="font-sans antialiased text-[var(--text-main)] overflow-hidden" x-data="{ sidebarOpen: false }">
         <x-banner />
+
+        <!-- Overlay Mobile da Sidebar -->
+        <div x-show="sidebarOpen" @click="sidebarOpen = false" x-transition.opacity class="fixed inset-0 bg-[#000000a0] backdrop-blur-sm z-[45] md:hidden" style="display: none;"></div>
 
         <div class="flex h-screen overflow-hidden bg-[var(--bg-app)]">
             <!-- Sidebar Component -->
