@@ -3,8 +3,8 @@
     <div
         class="flex flex-col md:flex-row justify-between md:items-center bg-white p-6 rounded-lg shadow-sm border border-gray-100 gap-4">
         <div>
-            <h2 class="text-2xl font-bold text-[var(--primary-color)]">Gestão da Frota de Viaturas</h2>
-            <p class="text-sm text-gray-500 mt-1">Cadastro, manutenção e ativação operacional da frota tática.</p>
+            <h2 class="text-2xl font-bold text-[var(--primary-color)]">Viaturas</h2>
+            <p class="text-sm text-gray-500 mt-1">Cadastro, manutenção e ativação das viaturas.</p>
         </div>
 
         <div class="flex flex-col sm:flex-row items-center gap-4 w-full md:w-auto">
@@ -146,7 +146,7 @@
                     <form wire:submit.prevent="salvar">
                         <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 border-t-4 border-[var(--primary-color)]">
                             <h3 class="text-xl font-bold text-gray-900 mb-4" id="modal-title">
-                                {{ $viaturaId ? 'Editar Viatura' : 'Nova Viatura Tática' }}
+                                {{ $viaturaId ? 'Editar Viatura' : 'Nova Viatura' }}
                             </h3>
 
                             <div class="space-y-4">

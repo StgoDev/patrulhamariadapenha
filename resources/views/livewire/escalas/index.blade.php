@@ -3,7 +3,7 @@
     <div
         class="flex flex-col md:flex-row justify-between md:items-center bg-white p-6 rounded-lg shadow-sm border border-gray-100 gap-4">
         <div>
-            <h2 class="text-2xl font-bold text-[var(--primary-color)]">Comando Tático: Escalas</h2>
+            <h2 class="text-2xl font-bold text-[var(--primary-color)]">Escalas</h2>
             <p class="text-sm text-gray-500 mt-1">Gestão de viaturas, turnos e guarnições despachadas.</p>
         </div>
 
@@ -60,7 +60,10 @@
                                 </td>
                                 <td class="px-6 py-4">
                                     <span
-                                        class="bg-gray-100 text-gray-800 font-bold px-2 py-1 rounded text-xs">{{ $escala->turno }}h ({{ $escala->inicio ? \Carbon\Carbon::parse($escala->inicio)->format('H:i') : '' }} às {{ $escala->termino ? \Carbon\Carbon::parse($escala->termino)->format('H:i') : '' }})</span>
+                                        class="bg-gray-100 text-gray-800 font-bold px-2 py-1 rounded text-xs">{{ $escala->turno }}h
+                                        ({{ $escala->inicio ? \Carbon\Carbon::parse($escala->inicio)->format('H:i') : '' }}
+                                        às
+                                        {{ $escala->termino ? \Carbon\Carbon::parse($escala->termino)->format('H:i') : '' }})</span>
                                 </td>
                                 <td class="px-6 py-4 font-black">
                                     {{ optional($escala->viatura)->prefixo }}
@@ -78,13 +81,16 @@
                                 </td>
                                 <td class="px-6 py-4 text-center">
                                     @if($escala->status === 'ATIVA')
-                                        <span class="bg-[var(--status-success)]/10 text-[var(--status-success)] font-bold px-2 py-1 rounded text-xs text-center border mx-auto">ATIVO</span>
+                                        <span
+                                            class="bg-[var(--status-success)]/10 text-[var(--status-success)] font-bold px-2 py-1 rounded text-xs text-center border mx-auto">ATIVO</span>
                                     @else
-                                        <span class="bg-gray-100 text-gray-600 font-bold px-2 py-1 rounded text-xs text-center mx-auto">ENCERRADO</span>
+                                        <span
+                                            class="bg-gray-100 text-gray-600 font-bold px-2 py-1 rounded text-xs text-center mx-auto">ENCERRADO</span>
                                     @endif
                                 </td>
                                 <td class="px-6 py-4 text-center">
-                                    <button type="button" wire:click="openEditModal({{ $escala->id }})" class="px-3 py-1 bg-orange-500 text-white text-xs font-bold rounded-md hover:bg-orange-600 shadow-sm transition-colors uppercase tracking-wider">
+                                    <button type="button" wire:click="openEditModal({{ $escala->id }})"
+                                        class="px-3 py-1 bg-orange-500 text-white text-xs font-bold rounded-md hover:bg-orange-600 shadow-sm transition-colors uppercase tracking-wider">
                                         Editar
                                     </button>
                                 </td>
@@ -135,7 +141,8 @@
                                         @enderror
                                     </div>
                                     <div class="relative z-50">
-                                        <label class="block text-sm font-bold text-gray-700 mb-1">Início do Turno</label>
+                                        <label class="block text-sm font-bold text-gray-700 mb-1">Início do
+                                            Turno</label>
                                         <input type="time" wire:model="inicio"
                                             class="w-full border-gray-300 rounded-md focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] relative z-50 bg-white shadow-sm"
                                             required>
@@ -143,7 +150,8 @@
                                         @enderror
                                     </div>
                                     <div class="relative z-50">
-                                        <label class="block text-sm font-bold text-gray-700 mb-1">Duração (Turno)</label>
+                                        <label class="block text-sm font-bold text-gray-700 mb-1">Duração
+                                            (Turno)</label>
                                         <select wire:model="turno"
                                             class="w-full border-gray-300 rounded-md focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] relative z-50 bg-white shadow-sm"
                                             required>
@@ -185,7 +193,7 @@
                                         selectedId: @entangle('comandante_id'),
                                         options: [
                                             @foreach($policiais as $p)
-                                            { id: {{ $p->id }}, text: `{{ $p->nome }} (CPF: {{ $p->cpf }})` },
+                                                { id: {{ $p->id }}, text: `{{ $p->nome }} (CPF: {{ $p->cpf }})` },
                                             @endforeach
                                         ],
                                         get filtered() {
@@ -197,25 +205,41 @@
                                             return f ? f.text : 'Selecionar Comandante (Busca Inteligente)';
                                         }
                                     }" @click.away="open = false; search = ''">
-                                        <label class="block text-xs font-bold text-gray-700 mb-1">Comandante da VTR</label>
-                                        <button type="button" @click="open = !open" class="w-full text-left px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-1 focus:ring-[var(--primary-color)] text-sm shadow-sm bg-white flex justify-between items-center transition-all">
-                                            <span x-text="selectedText" :class="selectedId ? 'text-[var(--primary-color)] font-bold' : 'text-gray-500'"></span>
-                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                        <label class="block text-xs font-bold text-gray-700 mb-1">Comandante da
+                                            VTR</label>
+                                        <button type="button" @click="open = !open"
+                                            class="w-full text-left px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-1 focus:ring-[var(--primary-color)] text-sm shadow-sm bg-white flex justify-between items-center transition-all">
+                                            <span x-text="selectedText"
+                                                :class="selectedId ? 'text-[var(--primary-color)] font-bold' : 'text-gray-500'"></span>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M19 9l-7 7-7-7"></path>
+                                            </svg>
                                         </button>
-                                        <div x-show="open" style="display: none;" class="absolute w-full mt-1 bg-white border border-gray-200 rounded-md shadow-2xl z-[100] flex flex-col">
-                                            <div class="p-2 border-b border-gray-100 flex-shrink-0 bg-gray-50 rounded-t-md">
-                                                <input type="text" x-model="search" placeholder="Buscar por Patente, Nome ou Matrícula..." class="w-full px-3 py-1.5 border border-gray-300 rounded text-xs focus:ring-[var(--primary-color)] font-medium text-gray-700">
+                                        <div x-show="open" style="display: none;"
+                                            class="absolute w-full mt-1 bg-white border border-gray-200 rounded-md shadow-2xl z-[100] flex flex-col">
+                                            <div
+                                                class="p-2 border-b border-gray-100 flex-shrink-0 bg-gray-50 rounded-t-md">
+                                                <input type="text" x-model="search"
+                                                    placeholder="Buscar por Patente, Nome ou Matrícula..."
+                                                    class="w-full px-3 py-1.5 border border-gray-300 rounded text-xs focus:ring-[var(--primary-color)] font-medium text-gray-700">
                                             </div>
                                             <ul class="overflow-y-auto flex-1 p-1 max-h-48">
                                                 <template x-for="opt in filtered" :key="opt.id">
-                                                    <li @click="selectedId = opt.id; open = false; search = ''" class="px-3 py-2 hover:bg-[var(--primary-color)] hover:text-white cursor-pointer text-xs font-bold rounded-md transition-colors" :class="selectedId === opt.id ? 'bg-purple-100 text-[var(--primary-color)]' : 'text-gray-700'">
+                                                    <li @click="selectedId = opt.id; open = false; search = ''"
+                                                        class="px-3 py-2 hover:bg-[var(--primary-color)] hover:text-white cursor-pointer text-xs font-bold rounded-md transition-colors"
+                                                        :class="selectedId === opt.id ? 'bg-purple-100 text-[var(--primary-color)]' : 'text-gray-700'">
                                                         <span x-text="opt.text"></span>
                                                     </li>
                                                 </template>
-                                                <li x-show="filtered.length === 0" class="px-3 py-2 text-xs text-gray-500 text-center">Nenhum oficial encontrado.</li>
+                                                <li x-show="filtered.length === 0"
+                                                    class="px-3 py-2 text-xs text-gray-500 text-center">Nenhum oficial
+                                                    encontrado.</li>
                                             </ul>
                                         </div>
-                                        @error('comandante_id') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                                        @error('comandante_id') <span class="text-red-500 text-xs">{{ $message }}</span>
+                                        @enderror
                                     </div>
 
                                     <div class="relative z-[50]" x-data="{
@@ -224,7 +248,7 @@
                                         selectedId: @entangle('motorista_id'),
                                         options: [
                                             @foreach($policiais as $p)
-                                            { id: {{ $p->id }}, text: `{{ $p->nome }} (CPF: {{ $p->cpf }})` },
+                                                { id: {{ $p->id }}, text: `{{ $p->nome }} (CPF: {{ $p->cpf }})` },
                                             @endforeach
                                         ],
                                         get filtered() {
@@ -236,25 +260,41 @@
                                             return f ? f.text : 'Selecionar Motorista (Busca Inteligente)';
                                         }
                                     }" @click.away="open = false; search = ''">
-                                        <label class="block text-xs font-bold text-gray-700 mb-1">Motorista da VTR</label>
-                                        <button type="button" @click="open = !open" class="w-full text-left px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-1 focus:ring-[var(--primary-color)] text-sm shadow-sm bg-white flex justify-between items-center transition-all">
-                                            <span x-text="selectedText" :class="selectedId ? 'text-[var(--primary-color)] font-bold' : 'text-gray-500'"></span>
-                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                        <label class="block text-xs font-bold text-gray-700 mb-1">Motorista da
+                                            VTR</label>
+                                        <button type="button" @click="open = !open"
+                                            class="w-full text-left px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-1 focus:ring-[var(--primary-color)] text-sm shadow-sm bg-white flex justify-between items-center transition-all">
+                                            <span x-text="selectedText"
+                                                :class="selectedId ? 'text-[var(--primary-color)] font-bold' : 'text-gray-500'"></span>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M19 9l-7 7-7-7"></path>
+                                            </svg>
                                         </button>
-                                        <div x-show="open" style="display: none;" class="absolute w-full mt-1 bg-white border border-gray-200 rounded-md shadow-2xl z-[100] flex flex-col">
-                                            <div class="p-2 border-b border-gray-100 flex-shrink-0 bg-gray-50 rounded-t-md">
-                                                <input type="text" x-model="search" placeholder="Buscar por Patente, Nome ou Matrícula..." class="w-full px-3 py-1.5 border border-gray-300 rounded text-xs focus:ring-[var(--primary-color)] font-medium text-gray-700">
+                                        <div x-show="open" style="display: none;"
+                                            class="absolute w-full mt-1 bg-white border border-gray-200 rounded-md shadow-2xl z-[100] flex flex-col">
+                                            <div
+                                                class="p-2 border-b border-gray-100 flex-shrink-0 bg-gray-50 rounded-t-md">
+                                                <input type="text" x-model="search"
+                                                    placeholder="Buscar por Patente, Nome ou Matrícula..."
+                                                    class="w-full px-3 py-1.5 border border-gray-300 rounded text-xs focus:ring-[var(--primary-color)] font-medium text-gray-700">
                                             </div>
                                             <ul class="overflow-y-auto flex-1 p-1 max-h-48">
                                                 <template x-for="opt in filtered" :key="opt.id">
-                                                    <li @click="selectedId = opt.id; open = false; search = ''" class="px-3 py-2 hover:bg-[var(--primary-color)] hover:text-white cursor-pointer text-xs font-bold rounded-md transition-colors" :class="selectedId === opt.id ? 'bg-purple-100 text-[var(--primary-color)]' : 'text-gray-700'">
+                                                    <li @click="selectedId = opt.id; open = false; search = ''"
+                                                        class="px-3 py-2 hover:bg-[var(--primary-color)] hover:text-white cursor-pointer text-xs font-bold rounded-md transition-colors"
+                                                        :class="selectedId === opt.id ? 'bg-purple-100 text-[var(--primary-color)]' : 'text-gray-700'">
                                                         <span x-text="opt.text"></span>
                                                     </li>
                                                 </template>
-                                                <li x-show="filtered.length === 0" class="px-3 py-2 text-xs text-gray-500 text-center">Nenhum oficial encontrado.</li>
+                                                <li x-show="filtered.length === 0"
+                                                    class="px-3 py-2 text-xs text-gray-500 text-center">Nenhum oficial
+                                                    encontrado.</li>
                                             </ul>
                                         </div>
-                                        @error('motorista_id') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                                        @error('motorista_id') <span class="text-red-500 text-xs">{{ $message }}</span>
+                                        @enderror
                                     </div>
 
                                     <div class="relative z-[40]" x-data="{
@@ -263,7 +303,7 @@
                                         selectedId: @entangle('patrulheiro_id'),
                                         options: [
                                             @foreach($policiais as $p)
-                                            { id: {{ $p->id }}, text: `{{ $p->nome }} (CPF: {{ $p->cpf }})` },
+                                                { id: {{ $p->id }}, text: `{{ $p->nome }} (CPF: {{ $p->cpf }})` },
                                             @endforeach
                                         ],
                                         get filtered() {
@@ -275,28 +315,45 @@
                                             return f ? f.text : 'Sem Patrulheiro (Vazio)';
                                         }
                                     }" @click.away="open = false; search = ''">
-                                        <label class="block text-xs font-bold text-gray-700 mb-1">Patrulheiro 3 (Opcional)</label>
-                                        <button type="button" @click="open = !open" class="w-full text-left px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-1 focus:ring-[var(--primary-color)] text-sm shadow-sm bg-white flex justify-between items-center transition-all">
-                                            <span x-text="selectedText" :class="selectedId ? 'text-[var(--primary-color)] font-bold' : 'text-gray-500'"></span>
-                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                        <label class="block text-xs font-bold text-gray-700 mb-1">Patrulheiro 3
+                                            (Opcional)</label>
+                                        <button type="button" @click="open = !open"
+                                            class="w-full text-left px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-1 focus:ring-[var(--primary-color)] text-sm shadow-sm bg-white flex justify-between items-center transition-all">
+                                            <span x-text="selectedText"
+                                                :class="selectedId ? 'text-[var(--primary-color)] font-bold' : 'text-gray-500'"></span>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M19 9l-7 7-7-7"></path>
+                                            </svg>
                                         </button>
-                                        <div x-show="open" style="display: none;" class="absolute w-full mt-1 bg-white border border-gray-200 rounded-md shadow-2xl z-[100] flex flex-col">
-                                            <div class="p-2 border-b border-gray-100 flex-shrink-0 bg-gray-50 rounded-t-md">
-                                                <input type="text" x-model="search" placeholder="Buscar por Patente, Nome ou Matrícula..." class="w-full px-3 py-1.5 border border-gray-300 rounded text-xs focus:ring-[var(--primary-color)] font-medium text-gray-700">
+                                        <div x-show="open" style="display: none;"
+                                            class="absolute w-full mt-1 bg-white border border-gray-200 rounded-md shadow-2xl z-[100] flex flex-col">
+                                            <div
+                                                class="p-2 border-b border-gray-100 flex-shrink-0 bg-gray-50 rounded-t-md">
+                                                <input type="text" x-model="search"
+                                                    placeholder="Buscar por Patente, Nome ou Matrícula..."
+                                                    class="w-full px-3 py-1.5 border border-gray-300 rounded text-xs focus:ring-[var(--primary-color)] font-medium text-gray-700">
                                             </div>
                                             <ul class="overflow-y-auto flex-1 p-1 max-h-48">
-                                                <li @click="selectedId = ''; open = false; search = ''" class="px-3 py-2 hover:bg-[var(--primary-color)] hover:text-white cursor-pointer text-xs font-bold rounded-md transition-colors text-red-500 pb-2 border-b border-gray-100 mb-1">
+                                                <li @click="selectedId = ''; open = false; search = ''"
+                                                    class="px-3 py-2 hover:bg-[var(--primary-color)] hover:text-white cursor-pointer text-xs font-bold rounded-md transition-colors text-red-500 pb-2 border-b border-gray-100 mb-1">
                                                     (Limpar) Sem Patrulheiro
                                                 </li>
                                                 <template x-for="opt in filtered" :key="opt.id">
-                                                    <li @click="selectedId = opt.id; open = false; search = ''" class="px-3 py-2 hover:bg-[var(--primary-color)] hover:text-white cursor-pointer text-xs font-bold rounded-md transition-colors" :class="selectedId === opt.id ? 'bg-purple-100 text-[var(--primary-color)]' : 'text-gray-700'">
+                                                    <li @click="selectedId = opt.id; open = false; search = ''"
+                                                        class="px-3 py-2 hover:bg-[var(--primary-color)] hover:text-white cursor-pointer text-xs font-bold rounded-md transition-colors"
+                                                        :class="selectedId === opt.id ? 'bg-purple-100 text-[var(--primary-color)]' : 'text-gray-700'">
                                                         <span x-text="opt.text"></span>
                                                     </li>
                                                 </template>
-                                                <li x-show="filtered.length === 0" class="px-3 py-2 text-xs text-gray-500 text-center">Nenhum oficial encontrado.</li>
+                                                <li x-show="filtered.length === 0"
+                                                    class="px-3 py-2 text-xs text-gray-500 text-center">Nenhum oficial
+                                                    encontrado.</li>
                                             </ul>
                                         </div>
-                                        @error('patrulheiro_id') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                                        @error('patrulheiro_id') <span
+                                        class="text-red-500 text-xs">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
                             </div>
@@ -305,7 +362,7 @@
                         <div
                             class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse rounded-b-lg border-t border-gray-100">
                             <button type="submit"
-                                        class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-[var(--primary-color)] text-base font-medium text-white hover:bg-purple-800 focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-[var(--primary-color)] sm:ml-3 sm:w-auto sm:text-sm">
+                                class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-[var(--primary-color)] text-base font-medium text-white hover:bg-purple-800 focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-[var(--primary-color)] sm:ml-3 sm:w-auto sm:text-sm">
                                 Confirmar Escala
                             </button>
                             <button type="button" wire:click="closeModals"
