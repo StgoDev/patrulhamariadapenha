@@ -1,0 +1,44 @@
+@import 'tailwindcss';
+
+@plugin '@tailwindcss/forms';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+:root {
+  /* Identidade Visual - Projeto Maria da Penha */
+  --bg-app: #f9fafb; /* Gelo muito claro */
+  --primary-color: rgb(99 9 69); /* Rosa/Lilás Maria da Penha */
+  --text-main: #1e293b; /* Cinza escuro */
+  --text-muted: #64748b;
+  --status-success: #10b981;
+  --status-warning: #f59e0b;
+  --status-danger: #ef4444;
+  --bg-overlay: oklch(0.21 0.03 264.67 / 0.57); /* Sombra pesada (Lilás escuro/Roxo) universal para modais */
+}
+
+@theme {
+  --font-sans:
+    Figtree, ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    
+  --color-modal-overlay: var(--bg-overlay);
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
