@@ -111,4 +111,27 @@ class Index extends Component
             'icon' => 'success'
         ]);
     }
+
+    public function alternarBloqueio($id)
+    {
+        $user = User::findOrFail($id);
+        
+        if ($user->id === auth()->id()) {
+            $this->dispatch('alerta', [
+                'title' => 'Ação Negada',
+                'text' => 'Você não pode bloquear a sua própria conta ativa.',
+                'icon' => 'warning'
+            ]);
+            return;
+        }
+
+        $user->is_blocked = !$user->is_blocked;
+        $user->save();
+
+        $this->dispatch('alerta', [
+            'title' => $user->is_blocked ? 'Conta Bloqueada' : 'Acesso Liberado',
+            'text' => $user->is_blocked ? 'Este usuário não poderá mais logar no sistema.' : 'A credencial foi validada e reativada.',
+            'icon' => 'success'
+        ]);
+    }
 }

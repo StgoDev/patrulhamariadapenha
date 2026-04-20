@@ -18,6 +18,9 @@ class LoginForm extends Form
     #[Validate('required|string')]
     public string $password = '';
 
+    #[Validate('required', message: 'Você precisa preencher a validação visual acima.')]
+    public string $captcha = '';
+
     #[Validate('boolean')]
     public bool $remember = false;
 
@@ -29,6 +32,22 @@ class LoginForm extends Form
     public function authenticate(): void
     {
         $this->ensureIsNotRateLimited();
+
+        // Validação Mews Captcha Manual para evitar conflito de Lifecycle do Livewire
+        if (!captcha_check($this->captcha)) {
+            RateLimiter::hit($this->throttleKey());
+            throw ValidationException::withMessages([
+                'form.captcha' => 'O código de verificação está incorreto ou expirou. Clique na imagem para gerar um novo.',
+            ]);
+        }
+
+        $user = \App\Models\User::where('cpf', $this->cpf)->first();
+        if ($user && $user->is_blocked) {
+            RateLimiter::hit($this->throttleKey());
+            throw ValidationException::withMessages([
+                'form.cpf' => 'Acesso negado: Seu usuário contido no CPF foi bloqueado pelo Comando Administrativo.',
+            ]);
+        }
 
         if (! Auth::attempt($this->only(['cpf', 'password']), $this->remember)) {
             RateLimiter::hit($this->throttleKey());

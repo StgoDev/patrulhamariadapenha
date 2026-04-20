@@ -42,3 +42,21 @@
     border-color: var(--color-gray-200, currentcolor);
   }
 }
+
+/* Captcha Auth Discreto */
+.captcha-discreto {
+    width: 200px !important;
+    height: auto !important;
+    opacity: 0.70;
+    mix-blend-mode: multiply;
+    filter: grayscale(40%);
+    transition: all 0.3s ease-in-out;
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+}
+.captcha-discreto:hover {
+    opacity: 1;
+    filter: grayscale(0%);
+    transform: scale(1.02);
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+}

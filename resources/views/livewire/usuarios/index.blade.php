@@ -37,7 +37,12 @@
                     <tr class="hover:bg-gray-50 transition-colors">
                         <td class="px-6 py-3 text-gray-500">#{{ $user->id }}</td>
                         <td class="px-6 py-3">
-                            <div class="font-bold text-[var(--text-main)]">{{ $user->name }}</div>
+                            <div class="font-bold text-[var(--text-main)] flex items-center gap-2">
+                                {{ $user->name }}
+                                @if($user->is_blocked)
+                                    <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-gray-600 text-white uppercase">Bloqueado</span>
+                                @endif
+                            </div>
                             <div class="text-xs text-gray-500">{{ $user->email }}</div>
                         </td>
                         <td class="px-6 py-3">
@@ -54,6 +59,13 @@
                         </td>
                         <td class="px-6 py-3 text-center">
                             <div class="flex items-center justify-center gap-2">
+                                <button wire:click.prevent="alternarBloqueio({{ $user->id }})" class="p-1.5 {{ $user->is_blocked ? 'bg-green-600 hover:bg-green-700' : 'bg-gray-500 hover:bg-gray-600' }} text-white rounded-md transition-colors" title="{{ $user->is_blocked ? 'Desbloquear Acesso' : 'Bloquear Acesso' }}">
+                                    @if($user->is_blocked)
+                                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5V6.75a4.5 4.5 0 119 0v3.75M3.75 21.75h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H3.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" /></svg>
+                                    @else
+                                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" /></svg>
+                                    @endif
+                                </button>
                                 <button wire:click.prevent="editar({{ $user->id }})" class="p-1.5 bg-orange-500 hover:bg-orange-600 text-white rounded-md transition-colors" title="Modificar Acesso">
                                     <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" /></svg>
                                 </button>
